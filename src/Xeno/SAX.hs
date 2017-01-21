@@ -1,8 +1,7 @@
-{-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE BangPatterns        #-}
+{-# LANGUAGE MultiWayIf          #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE BangPatterns #-}
 
 -- | SAX parser and API for XML.
 
@@ -16,10 +15,10 @@ module Xeno.SAX
 import           Control.Exception
 import           Control.Monad.State.Strict
 import           Control.Spork
-import           Data.ByteString (ByteString)
-import qualified Data.ByteString as S
-import qualified Data.ByteString.Char8 as S8
-import qualified Data.ByteString.Unsafe as SU
+import           Data.ByteString            (ByteString)
+import qualified Data.ByteString            as S
+import qualified Data.ByteString.Char8      as S8
+import qualified Data.ByteString.Unsafe     as SU
 import           Data.Functor.Identity
 import           Data.Monoid
 import           Data.Word
@@ -41,7 +40,7 @@ validate s =
                (\_ -> pure ())
                s)) of
     Left (_ :: XenoException) -> False
-    Right _ -> True
+    Right _                   -> True
 
 -- | Parse the XML and pretty print it to stdout.
 dump :: ByteString -> IO ()
@@ -252,8 +251,8 @@ isSpaceChar c = c == 32 || (c <= 10 && c >= 9) || c == 13
 
 -- | Is the character a valid tag name constituent?
 isNameChar :: Word8 -> Bool
-isNameChar c =
-  (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || c == 95 || c == 45
+isNameChar c =                                                            --- HC include numbers and `:`
+  (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || c == 95 || c == 45 || (c >= 48 && c <= 58)
 {-# INLINE isNameChar #-}
 
 -- | Char for '\''.
