@@ -187,20 +187,6 @@ process openF attrF endOpenF textF closeF str = findLT 0
       where
         index = skipSpaces str index0
 {-# INLINE process #-}
-{-# SPECIALISE process ::
-                 (ByteString -> Identity ()) ->
-                   (ByteString -> ByteString -> Identity ()) ->
-                     (ByteString -> Identity ()) ->
-                       (ByteString -> Identity ()) ->
-                         (ByteString -> Identity ()) -> ByteString -> Identity ()
-               #-}
-{-# SPECIALISE process ::
-                 (ByteString -> IO ()) ->
-                   (ByteString -> ByteString -> IO ()) ->
-                     (ByteString -> IO ()) ->
-                       (ByteString -> IO ()) ->
-                         (ByteString -> IO ()) -> ByteString -> IO ()
-               #-}
 
 --------------------------------------------------------------------------------
 -- ByteString utilities

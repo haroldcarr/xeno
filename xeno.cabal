@@ -3,42 +3,10 @@ version: 0
 build-type: Simple
 cabal-version: >=1.10
 
-flag libxml2
-  description:   Include libxml2 in the benchmarks
-  default:       False
-
 library
   hs-source-dirs: src
   ghc-options: -Wall -O2
   exposed-modules: Xeno.SAX, Xeno.DOM, Xeno.Types
   other-modules: Control.Spork
   build-depends: base >= 4.7 && < 5, bytestring, vector, deepseq, array, mutable-containers, mtl
-  default-language: Haskell2010
-
-test-suite xeno-test
-  type: exitcode-stdio-1.0
-  hs-source-dirs: test
-  main-is: Main.hs
-  build-depends: base, xeno, hexml, hspec, bytestring
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
-  default-language: Haskell2010
-
-benchmark xeno-speed-bench
-  type: exitcode-stdio-1.0
-  hs-source-dirs: bench
-  main-is: Speed.hs
-  build-depends: base, xeno, hexml, criterion, bytestring, deepseq, ghc-prim, xml, hexpat
-  if flag(libxml2)
-    build-depends: libxml
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N -O2
-  if flag(libxml2)
-     ghc-options: -DLIBXML2
-  default-language: Haskell2010
-
-benchmark xeno-memory-bench
-  type: exitcode-stdio-1.0
-  hs-source-dirs: bench
-  main-is: Memory.hs
-  build-depends: base, xeno, weigh, bytestring, deepseq, hexml
-  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N -O2
   default-language: Haskell2010
