@@ -237,8 +237,9 @@ isSpaceChar c = c == 32 || (c <= 10 && c >= 9) || c == 13
 
 -- | Is the character a valid tag name constituent?
 isNameChar :: Word8 -> Bool
-isNameChar c =                                                            --- HC include numbers and `:`
-  (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || c == 95 || c == 45 || (c >= 48 && c <= 58)
+isNameChar c =
+  --     a           Z            A          Z           _          - HC:       0          :           .
+  (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || c == 95 || c == 45 || (c >= 48 && c <= 58) || c == 46
 {-# INLINE isNameChar #-}
 
 -- | Char for '\''.
